@@ -1,9 +1,0 @@
-
-
-<ul class="navbar-nav">
-    tregreg
-    {% for key, value in menu_links.items %}
-    <li class="nav-item {% if request.path == key %}active{% endif %}">
-        <a class="nav-link" href="/departure/{{ key }}">{{ value }} {{ request.path }}</a>
-    </li>
-</ul>

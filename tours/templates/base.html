@@ -16,21 +16,12 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="/departure/msk">Из Москвы</a>
+          {% for key, value in menu_links.items %}
+          {% url 'departure' key as var %}
+          <li class="nav-item {% if request.path == var %}active{% endif %}">
+              <a class="nav-link" href="/departure/{{ key }}">{{ value }}</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/departure/spb">Из Петербурга</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/departure/nsk">Из Новосибирска</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/departure/ekb">Из Екатеринбурга</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/departure/kazan">Из Казани</a>
-          </li>
+          {% endfor %}
         </ul>
       </div>
     </nav>

@@ -17,7 +17,7 @@ def main_view(request):
     while len(rand_tour_list) < 6:
         rand_tour_list.update([choice(list(data_tours.items()))])
     return render(request, 'index.html', {'title': title, 'subtitle': subtitle, 'tours': data_tours,
-                                          'rand_tours': rand_tour_list, 'description': description, 'departures': data_departures, 'menu_links': data_departures})
+                                          'rand_tours': rand_tour_list, 'description': description, 'departures': data_departures})
 
 
 def departure_view(request, departure):
@@ -51,7 +51,7 @@ def departure_view(request, departure):
 
     return render(request, 'departure.html', {'departure': departure_from, 'departure_filtered': departure_filtered,
                                               'tour_finded': tour_finded, 'min_price': min_price,
-                                              'max_price': max_price, 'min_night': min_night, 'max_night': max_night, 'menu_links': data_departures})
+                                              'max_price': max_price, 'min_night': min_night, 'max_night': max_night})
 
 
 def tour_view(request, id):
@@ -60,6 +60,6 @@ def tour_view(request, id):
     stars_char = ''
     for i in range(int(tours['stars'])):
         stars_char += '★'
-    return render(request, 'tour.html', {'tours': tours, 'departures': departures, 'stars_count': stars_char, 'menu_links': data_departures})
+    return render(request, 'tour.html', {'tours': tours, 'departures': departures, 'stars_count': stars_char})
 
 
