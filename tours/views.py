@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponseServerError, HttpResponseNotFound
 from random import choice
+
+from django.http import HttpResponseServerError, HttpResponseNotFound
+from django.shortcuts import render
+
 from .data import tours as data_tours, departures as data_departures, title, subtitle, description
 
 
@@ -16,8 +18,9 @@ def main_view(request):
     rand_tour_list = dict()
     while len(rand_tour_list) < 6:
         rand_tour_list.update([choice(list(data_tours.items()))])
-    return render(request, 'index.html', {'title': title, 'subtitle': subtitle, 'tours': data_tours,
-                                          'rand_tours': rand_tour_list, 'description': description, 'departures': data_departures})
+
+    return render(request, 'index.html', {'title': title, 'subtitle': subtitle, 'rand_tours': rand_tour_list,
+                                          'description': description})
 
 
 def departure_view(request, departure):
@@ -27,27 +30,20 @@ def departure_view(request, departure):
         return HttpResponseNotFound("Нет такого направления")
 
     departure_filtered = dict()
-    for key, value in data_tours.items():
-        if value['departure'] == departure:
-            departure_filtered.update({key: value})
+    for id_hotel, hotel in data_tours.items():
+        if hotel['departure'] == departure:
+            departure_filtered.update({id_hotel: hotel})
 
     tour_finded = len(departure_filtered)
-    min_price = 0
-    max_price = 0
-    min_night = 0
-    max_night = 0
+    night_dict = dict()
+    price_dict = dict()
     for key, value in departure_filtered.items():
-        if not min_price and not min_night:
-            min_price = value['price']
-            min_night = value['nights']
-        if value['price'] >= min_price:
-            max_price = value['price']
-        else:
-            min_price = value['price']
-        if value['nights'] >= min_night:
-            max_night = value['nights']
-        else:
-            min_night = value['nights']
+        night_dict.update({key: value['nights']})
+        price_dict.update({key: value['price']})
+    max_night = max(night_dict.values())
+    min_night = min(night_dict.values())
+    max_price = max(price_dict.values())
+    min_price = min(price_dict.values())
 
     return render(request, 'departure.html', {'departure': departure_from, 'departure_filtered': departure_filtered,
                                               'tour_finded': tour_finded, 'min_price': min_price,
@@ -56,10 +52,8 @@ def departure_view(request, departure):
 
 def tour_view(request, id):
     tours = data_tours[id]
-    departures = data_departures
     stars_char = ''
     for i in range(int(tours['stars'])):
         stars_char += '★'
-    return render(request, 'tour.html', {'tours': tours, 'departures': departures, 'stars_count': stars_char})
 
-
+    return render(request, 'tour.html', {'tours': tours, 'departures': data_departures, 'stars_count': stars_char})

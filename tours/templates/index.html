@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
 {% block container %}
   <main class="container mt-3">
-    <!-- HERO -->
     <section class="jumbotron text-center mt-4" style="background: url('https://place-hold.it/1600x300'); background-position: center center">
       <h1 class="display-4">{{ title }}</h1>
       <p class="lead">{{ subtitle }}</p>
       <p class="mt-5 w-50 mx-auto">{{ description }}</p>
     </section>
-    <!-- CARDS -->
     <div class="row mt-5">
-      {% for key, value in rand_tours.items %}
+      {% for id_hotel, hotel in rand_tours.items %}
       <div class="col-4">
         <div class="card mb-4">
           <div class="embed-responsive embed-responsive-16by9">
-             <img class="card-img-top embed-responsive-item" src="{{ value.picture }}" alt="" />
+             <img class="card-img-top embed-responsive-item" src="{{ hotel.picture }}" alt="" />
           </div>
           <div class="card-body">
-            <h2 class="h5 card-title">{{ value.title }}</h2>
-            <p class="card-text">{{ value.description }}</p>
-            <a href="tour/{{ key }}" class="btn btn-sm btn-primary">Подробнее</a>
+            <h2 class="h5 card-title">{{ hotel.title }}</h2>
+            <p class="card-text">{{ hotel.description }}</p>
+            <a href="tour/{{ id_hotel }}" class="btn btn-sm btn-primary">Подробнее</a>
           </div>
         </div>
       </div>

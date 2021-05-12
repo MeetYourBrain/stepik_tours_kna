@@ -3,18 +3,17 @@
   <main class="container mt-3">
     <h1 class="display-5 mt-4">Летим {{ departure }}</h1>
     <p class="mb-4">Найдено {{ tour_finded }} тура, от {{ min_price }} до {{ max_price }} и от {{ min_night }} ночей до {{ max_night }} ночей</p>
-    {{ dlist }}
     <div class="row mt-5">
-      {% for key, value in departure_filtered.items %}
+      {% for id_hotel, hotel in departure_filtered.items %}
       <div class="col-4">
         <div class="card mb-4">
           <div class="embed-responsive embed-responsive-16by9">
-             <img class="card-img-top embed-responsive-item" src="{{ value.picture }}" alt="" />
+             <img class="card-img-top embed-responsive-item" src="{{ hotel.picture }}" alt="" />
           </div>
           <div class="card-body">
-            <h2 class="h5 card-title">{{ value.title }}</h2>
-            <p class="card-text">{{ value.description }}</p>
-            <a href="/tour/{{ key }}" class="btn btn-sm btn-primary">Подробнее</a>
+            <h2 class="h5 card-title">{{ hotel.title }}</h2>
+            <p class="card-text">{{ hotel.description }}</p>
+            <a href="/tour/{{ id_hotel }}" class="btn btn-sm btn-primary">Подробнее</a>
           </div>
         </div>
       </div>

@@ -16,10 +16,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          {% for key, value in menu_links.items %}
-          {% url 'departure' key as var %}
-          <li class="nav-item {% if request.path == var %}active{% endif %}">
-              <a class="nav-link" href="/departure/{{ key }}">{{ value }}</a>
+          {% for link, link_title in menu_links.items %}
+          {% url 'departure' link as get_url %}
+          <li class="nav-item {% if request.path == get_url %}active{% endif %}">
+              <a class="nav-link" href="/departure/{{ link }}">{{ link_title }}</a>
           </li>
           {% endfor %}
         </ul>
