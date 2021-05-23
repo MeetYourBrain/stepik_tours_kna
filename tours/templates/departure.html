@@ -2,7 +2,7 @@
 {% block container %}
   <main class="container mt-3">
     <h1 class="display-5 mt-4">Летим {{ departure }}</h1>
-    <p class="mb-4">Найдено {{ tour_finded }} тура, от {{ min_price }} до {{ max_price }} и от {{ min_night }} ночей до {{ max_night }} ночей</p>
+    <p class="mb-4">Найдено {{ tours_finded }} тура, от {{ min_price }} до {{ max_price }} и от {{ min_night }} ночей до {{ max_night }} ночей</p>
     <div class="row mt-5">
       {% for id_hotel, hotel in departure_filtered.items %}
       <div class="col-4">

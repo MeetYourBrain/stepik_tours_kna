@@ -19,8 +19,10 @@ def main_view(request):
     while len(rand_tour_list) < 6:
         rand_tour_list.update([choice(list(data_tours.items()))])
 
-    return render(request, 'index.html', {'title': title, 'subtitle': subtitle, 'rand_tours': rand_tour_list,
-                                          'description': description})
+    return render(request, 'index.html', context={'title': title,
+                                                  'subtitle': subtitle,
+                                                  'rand_tours': rand_tour_list,
+                                                  'description': description})
 
 
 def departure_view(request, departure):
@@ -34,20 +36,24 @@ def departure_view(request, departure):
         if hotel['departure'] == departure:
             departure_filtered.update({id_hotel: hotel})
 
-    tour_finded = len(departure_filtered)
+    tours_finded = len(departure_filtered)
     night_dict = dict()
     price_dict = dict()
-    for key, value in departure_filtered.items():
-        night_dict.update({key: value['nights']})
-        price_dict.update({key: value['price']})
+    for id_hotel, hotel in departure_filtered.items():
+        night_dict.update({id_hotel: hotel['nights']})
+        price_dict.update({id_hotel: hotel['price']})
     max_night = max(night_dict.values())
     min_night = min(night_dict.values())
     max_price = max(price_dict.values())
     min_price = min(price_dict.values())
 
-    return render(request, 'departure.html', {'departure': departure_from, 'departure_filtered': departure_filtered,
-                                              'tour_finded': tour_finded, 'min_price': min_price,
-                                              'max_price': max_price, 'min_night': min_night, 'max_night': max_night})
+    return render(request, 'departure.html', context={'departure': departure_from,
+                                                      'departure_filtered': departure_filtered,
+                                                      'tours_finded': tours_finded,
+                                                      'min_price': min_price,
+                                                      'max_price': max_price,
+                                                      'min_night': min_night,
+                                                      'max_night': max_night})
 
 
 def tour_view(request, id):
@@ -56,4 +62,6 @@ def tour_view(request, id):
     for i in range(int(tours['stars'])):
         stars_char += '★'
 
-    return render(request, 'tour.html', {'tours': tours, 'departures': data_departures, 'stars_count': stars_char})
+    return render(request, 'tour.html', context={'tours': tours,
+                                                 'departures': data_departures,
+                                                 'stars_count': stars_char})
